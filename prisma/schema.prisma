@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  nome      String
+  login     String   @unique
+  senha     String
+  createdAt DateTime @default(now())
+
+  examesCriados Exame[] @relation("UserExames")
+}
+
+model Paciente {
+  id             String   @id @default(uuid())
+  nome           String
+  cpf            String   @unique
+  dataNascimento DateTime
+  createdAt      DateTime @default(now())
+
+  exames Exame[]
+}
+
+model Exame {
+  id           String      @id @default(uuid())
+  numero       String      @unique
+  tipo         TipoExame
+  status       StatusExame @default(PENDENTE)
+  dataCadastro DateTime    @default(now())
+
+  // 🔗 Relação com paciente
+  paciente   Paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId String
+
+  // 🔗 Quem criou o exame
+  user   User   @relation("UserExames", fields: [userId], references: [id])
+  userId String
+}
+
+enum StatusExame {
+  PENDENTE
+  CONCLUIDO
+}
+
+enum TipoExame {
+  ANATOMO
+  COLPO
+  IMUNO
+  OUTROS
+}
