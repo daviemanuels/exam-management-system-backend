@@ -11,6 +11,7 @@ import { CreateExameController } from "./controllers/exames/CreateExameControlle
 import { CreateServicoController } from "./controllers/servico/CreateServicoController";
 import { ListExamesController } from "./controllers/exames/ListExamesController";
 import { DashboardController } from "./controllers/estatisticas/DashboardController";
+import { GetUsersController } from "./controllers/user/GetUsersController";
 
 const router = Router();
 
@@ -22,6 +23,7 @@ const createExameController = new CreateExameController();
 const createServicoController = new CreateServicoController();
 const listExamesController = new ListExamesController();
 const dashboardController = new DashboardController();
+const getUsersController = new GetUsersController();
 
 // Rotas públicas
 router.post("/users", createUserController.handle);
@@ -33,5 +35,7 @@ router.post("/exames", auth, createExameController.handle);
 router.post("/servicos", auth, createServicoController.handle);
 router.get("/exames", auth, listExamesController.handle);
 router.get("/dashboard", auth, dashboardController.handle);
+
+router.get("/users", auth, getUsersController.handle);
 
 export { router as routes };

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DashboardService } from "../../services/estatisticas/DashBoardService";
+import { DashboardService } from "../../services/estatisticas/DashboardService";
 
 export class DashboardController {
   async handle(req: Request, res: Response) {

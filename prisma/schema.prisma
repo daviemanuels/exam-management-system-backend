@@ -13,13 +13,26 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  nome      String
-  login     String   @unique
-  senha     String
-  createdAt DateTime @default(now())
+  id             String      @id @default(uuid())
+  nome           String
+  login          String      @unique
+  senha          String
+  funcao_usuario String?
+  status         StatusGeral @default(Ativo)
+  createdAt      DateTime    @default(now())
+
+  // 🔥 RELAÇÃO COM ROLE
+  roleId String?
+  role   Role?   @relation(fields: [roleId], references: [id])
 
   examesCriados Exame[] @relation("UserExames")
+}
+
+model Role {
+  id   String @id @default(uuid())
+  name String @unique
+
+  users User[]
 }
 
 model Paciente {
@@ -93,4 +106,9 @@ enum TipoExame {
   COLPO
   IMUNO
   OUTROS
+}
+
+enum StatusGeral {
+  Desativado
+  Ativo
 }
