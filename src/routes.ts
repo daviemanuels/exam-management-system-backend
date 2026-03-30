@@ -12,6 +12,10 @@ import { CreateServicoController } from "./controllers/servico/CreateServicoCont
 import { ListExamesController } from "./controllers/exames/ListExamesController";
 import { DashboardController } from "./controllers/estatisticas/DashboardController";
 import { GetUsersController } from "./controllers/user/GetUsersController";
+import { GetRoleController } from "./controllers/roles/GetRoleController";
+import { CreateRoleController } from "./controllers/roles/CreateRoleController";
+import { UpdateUserController } from "./controllers/user/UpdateUserController";
+import { DeleteUserController } from "./controllers/user/DeleteUserController";
 
 const router = Router();
 
@@ -24,6 +28,10 @@ const createServicoController = new CreateServicoController();
 const listExamesController = new ListExamesController();
 const dashboardController = new DashboardController();
 const getUsersController = new GetUsersController();
+const getRoleController = new GetRoleController();
+const createRoleController = new CreateRoleController();
+const updateUserController = new UpdateUserController();
+const deleteUserController = new DeleteUserController();
 
 // Rotas públicas
 router.post("/users", createUserController.handle);
@@ -37,5 +45,9 @@ router.get("/exames", auth, listExamesController.handle);
 router.get("/dashboard", auth, dashboardController.handle);
 
 router.get("/users", auth, getUsersController.handle);
+router.put("/users/:id", auth, updateUserController.handle);
+router.delete("/user/:id", auth, deleteUserController.handle);
+router.get("/roles", auth, getRoleController.handle);
+router.post("/roles", auth, createRoleController.handle);
 
 export { router as routes };

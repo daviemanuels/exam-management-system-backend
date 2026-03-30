@@ -1,8 +1,22 @@
 import prismaClient from "../../prisma";
 import bcrypt from "bcrypt";
 
+interface CreateUserRequest {
+  nome: string;
+  login: string;
+  senha: string;
+  funcao_usuario: string;
+  roleId: string;
+}
+
 export class CreateUserService {
-  async execute({ nome, login, senha }: any) {
+  async execute({
+    nome,
+    login,
+    senha,
+    funcao_usuario,
+    roleId,
+  }: CreateUserRequest) {
     const userExists = await prismaClient.user.findUnique({
       where: { login },
     });
@@ -18,6 +32,8 @@ export class CreateUserService {
         nome,
         login,
         senha: passwordHash,
+        funcao_usuario,
+        roleId,
       },
     });
 

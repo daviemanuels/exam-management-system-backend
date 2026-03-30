@@ -9,7 +9,7 @@ class GetUsersService {
         login: true,
         status: true,
         createdAt: true,
-
+        funcao_usuario: true,
         role: {
           select: {
             id: true,
