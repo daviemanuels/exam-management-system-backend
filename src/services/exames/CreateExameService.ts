@@ -1,4 +1,4 @@
-import prisma from "../../prisma";
+import prismaClient from "../../prisma";
 import { TipoExame } from "@prisma/client";
 
 interface IRequest {
@@ -20,7 +20,7 @@ export class CreateExameService {
     }
 
     // 🔹 valida paciente
-    const pacienteExists = await prisma.paciente.findUnique({
+    const pacienteExists = await prismaClient.paciente.findUnique({
       where: { id: pacienteId },
     });
 
@@ -30,7 +30,7 @@ export class CreateExameService {
 
     // 🔹 valida serviços (se vier)
     if (servicos && servicos.length > 0) {
-      const servicosExists = await prisma.servico.findMany({
+      const servicosExists = await prismaClient.servico.findMany({
         where: {
           id: { in: servicos },
         },
@@ -42,7 +42,7 @@ export class CreateExameService {
     }
 
     // 🔥 número automático
-    const lastExame = await prisma.exame.findFirst({
+    const lastExame = await prismaClient.exame.findFirst({
       orderBy: { numero: "desc" },
     });
 
@@ -53,7 +53,7 @@ export class CreateExameService {
     }
 
     // 🔹 criação com serviços
-    const exame = await prisma.exame.create({
+    const exame = await prismaClient.exame.create({
       data: {
         numero,
         tipo,

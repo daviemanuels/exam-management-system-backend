@@ -1,4 +1,4 @@
-import prisma from "../../prisma";
+import prismaClient from "../../prisma";
 import { TipoExame, StatusExame } from "@prisma/client";
 
 interface IRequest {
@@ -34,8 +34,8 @@ export class ListExamesService {
     };
 
     // 🔹 busca dados + total
-    const [exames, total] = await prisma.$transaction([
-      prisma.exame.findMany({
+    const [exames, total] = await prismaClient.$transaction([
+      prismaClient.exame.findMany({
         where,
         skip,
         take: limit,
@@ -52,7 +52,7 @@ export class ListExamesService {
         },
       }),
 
-      prisma.exame.count({ where }),
+      prismaClient.exame.count({ where }),
     ]);
 
     return {

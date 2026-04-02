@@ -5,13 +5,22 @@ import { CreateServicoController } from "../controllers/servico/CreateServicoCon
 
 // Middleware
 import { auth } from "../middlewares/auth";
+import { GetServicosController } from "../controllers/servico/GetServicosController";
+import { UpdateServicoController } from "../controllers/servico/UpdateServicoController";
+import { DeleteServicoController } from "../controllers/servico/DeleteServicoController";
 
 const servicoRoutes = Router();
 
 // instância
 const createServicoController = new CreateServicoController();
+const getServicoController = new GetServicosController();
+const updateServicoController = new UpdateServicoController();
+const deleteServicoController = new DeleteServicoController();
 
 // rota
 servicoRoutes.post("/servicos", auth, createServicoController.handle);
+servicoRoutes.get("/servicos", auth, getServicoController.handle);
+servicoRoutes.put("/servico/:id", auth, updateServicoController.handle);
+servicoRoutes.delete("/servico/:id", auth, deleteServicoController.handle);
 
 export { servicoRoutes };

@@ -1,4 +1,4 @@
-import prisma from "../../prisma";
+import prismaClient from "../../prisma";
 
 interface IRequest {
   nome: string;
@@ -13,7 +13,7 @@ export class CreateServicoService {
     }
 
     // 🔹 evita duplicidade
-    const servicoExists = await prisma.servico.findFirst({
+    const servicoExists = await prismaClient.servico.findFirst({
       where: {
         nome: {
           equals: nome,
@@ -27,7 +27,7 @@ export class CreateServicoService {
     }
 
     // 🔹 criação
-    const servico = await prisma.servico.create({
+    const servico = await prismaClient.servico.create({
       data: {
         nome,
         status,
