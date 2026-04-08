@@ -13,8 +13,10 @@ class DeletePacienteController {
       });
     }
 
+    const userId = req.userId;
+
     try {
-      const result = await service.execute({ id });
+      const result = await service.execute({ id, userId });
 
       return res.json(result);
     } catch (err: any) {

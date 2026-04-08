@@ -14,10 +14,13 @@ export class CreateServicoController {
 
     const service = new CreateServicoService();
 
+    const userId = req.userId;
+
     try {
       const servico = await service.execute({
         nome,
         status,
+        userId,
       });
 
       return res.json(servico);

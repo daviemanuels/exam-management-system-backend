@@ -6,6 +6,8 @@ class UpdateExameController {
     const { id } = req.params;
     const { tipo, pacienteId, servicos } = req.body;
 
+    const userId = req.userId;
+
     const service = new UpdateExameService();
 
     const exame = await service.execute({
@@ -13,6 +15,7 @@ class UpdateExameController {
       tipo,
       pacienteId,
       servicos,
+      userId,
     });
 
     return res.json(exame);

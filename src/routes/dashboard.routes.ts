@@ -5,6 +5,7 @@ import { DashboardController } from "../controllers/estatisticas/DashboardContro
 
 // Middleware
 import { auth } from "../middlewares/auth";
+import { isAdmin } from "../middlewares/admin";
 
 const dashboardRoutes = Router();
 
@@ -12,6 +13,6 @@ const dashboardRoutes = Router();
 const dashboardController = new DashboardController();
 
 // rota
-dashboardRoutes.get("/dashboard", auth, dashboardController.handle);
+dashboardRoutes.get("/dashboard", auth, isAdmin, dashboardController.handle);
 
 export { dashboardRoutes };

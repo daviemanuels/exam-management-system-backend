@@ -5,6 +5,7 @@ import { GetRoleController } from "../controllers/roles/GetRoleController";
 import { CreateRoleController } from "../controllers/roles/CreateRoleController";
 import { UpdateRoleController } from "../controllers/roles/UpdateRoleController";
 import { DeleteRoleController } from "../controllers/roles/DeleteRoleController";
+import { isAdmin } from "../middlewares/admin";
 
 const roleRoutes = Router();
 
@@ -13,9 +14,9 @@ const createRoleController = new CreateRoleController();
 const updateRoleController = new UpdateRoleController();
 const deleteRoleController = new DeleteRoleController();
 
-roleRoutes.get("/roles", auth, getRoleController.handle);
-roleRoutes.post("/roles", auth, createRoleController.handle);
-roleRoutes.put("/role/:id", auth, updateRoleController.handle);
-roleRoutes.delete("/role/:id", auth, deleteRoleController.handle);
+roleRoutes.get("/roles", auth, isAdmin, getRoleController.handle);
+roleRoutes.post("/roles", auth, isAdmin, createRoleController.handle);
+roleRoutes.put("/role/:id", auth, isAdmin, updateRoleController.handle);
+roleRoutes.delete("/role/:id", auth, isAdmin, deleteRoleController.handle);
 
 export { roleRoutes };

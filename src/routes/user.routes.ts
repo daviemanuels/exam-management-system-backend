@@ -9,6 +9,7 @@ import { DeleteUserController } from "../controllers/user/DeleteUserController";
 
 // middleware
 import { auth } from "../middlewares/auth";
+import { isAdmin } from "../middlewares/admin";
 
 const userRoutes = Router();
 
@@ -24,8 +25,8 @@ userRoutes.post("/users", createUserController.handle);
 userRoutes.post("/login", authController.handle);
 
 // protegidas
-userRoutes.get("/users", auth, getUsersController.handle);
-userRoutes.put("/users/:id", auth, updateUserController.handle);
-userRoutes.delete("/users/:id", auth, deleteUserController.handle);
+userRoutes.get("/users", auth, isAdmin, getUsersController.handle);
+userRoutes.put("/users/:id", auth, isAdmin, updateUserController.handle);
+userRoutes.delete("/users/:id", auth, isAdmin, deleteUserController.handle);
 
 export { userRoutes };

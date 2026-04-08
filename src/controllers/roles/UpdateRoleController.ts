@@ -8,11 +8,14 @@ class UpdateRoleController {
 
     const updateRoleService = new UpdateRoleService();
 
+    const userId = req.userId;
+
     try {
       const role = await updateRoleService.execute({
         id: String(id),
         name,
         status,
+        userId,
       });
 
       return res.json(role);

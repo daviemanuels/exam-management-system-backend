@@ -1,5 +1,6 @@
 import prismaClient from "../../prisma";
 import { TipoExame } from "@prisma/client";
+import { CreateLogService } from "../logs/CreateLogService";
 
 interface IRequest {
   tipo: TipoExame;
@@ -41,15 +42,15 @@ export class CreateExameService {
       }
     }
 
-    // 🔥 número automático
+    //  número automático
     const lastExame = await prismaClient.exame.findFirst({
       orderBy: { numero: "desc" },
     });
 
-    let numero = "1";
+    let numero = "000001";
 
     if (lastExame) {
-      numero = String(Number(lastExame.numero) + 1).padStart(6, "0"); // 🔥 melhorado
+      numero = String(Number(lastExame.numero) + 1).padStart(6, "0");
     }
 
     // 🔹 criação com serviços
@@ -77,6 +78,21 @@ export class CreateExameService {
         },
       },
     });
+
+    // LOGS
+    const logService = new CreateLogService();
+
+    try {
+      const nomesServicos =
+        exame.servicos?.map((s) => s.servico.nome).join(", ") || "Nenhum";
+
+      await logService.execute({
+        userId,
+        message: `Criou exame Nº ${numero} (${tipo}) para o paciente ${pacienteExists.nome}. Serviços: ${nomesServicos}`,
+      });
+    } catch (err) {
+      console.error("Erro ao gerar log:", err);
+    }
 
     return exame;
   }

@@ -5,15 +5,21 @@ class DeleteExameController {
   async handle(req: Request, res: Response) {
     const { id } = req.params;
 
-    const service = new DeleteExameService();
-
     if (!id || Array.isArray(id)) {
       return res.status(400).json({
         message: "ID inválido",
       });
     }
 
-    const result = await service.execute(id);
+    //  pega o userId (ajuste conforme seu middleware de auth)
+    const userId = req.userId;
+
+    const service = new DeleteExameService();
+
+    const result = await service.execute({
+      id,
+      userId,
+    });
 
     return res.json(result);
   }

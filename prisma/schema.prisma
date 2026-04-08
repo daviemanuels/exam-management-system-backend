@@ -21,11 +21,12 @@ model User {
   status         StatusGeral @default(Ativo)
   createdAt      DateTime    @default(now())
 
-  // 🔥 RELAÇÃO COM ROLE
+  //  RELAÇÃO COM ROLE
   roleId String?
   role   Role?   @relation(fields: [roleId], references: [id])
 
   examesCriados Exame[] @relation("UserExames")
+  logs          Log[]
 }
 
 model Role {
@@ -90,6 +91,17 @@ model ExameServico {
   servicoId String
 
   createdAt DateTime @default(now())
+}
+
+model Log {
+  id        String   @id @default(uuid())
+  message   String
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map("logs")
 }
 
 enum StatusExame {

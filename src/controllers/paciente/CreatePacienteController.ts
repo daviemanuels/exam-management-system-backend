@@ -17,6 +17,8 @@ export class CreatePacienteController {
 
     const service = new CreatePacienteService();
 
+    const userId = req.userId;
+
     try {
       const paciente = await service.execute({
         nome,
@@ -25,8 +27,9 @@ export class CreatePacienteController {
         email,
         telefone,
         nacionalidade,
-        sexo: sexo as Sexo, // 🔥 importante
+        sexo: sexo as Sexo, //  importante
         endereco,
+        userId,
       });
 
       return res.json(paciente);

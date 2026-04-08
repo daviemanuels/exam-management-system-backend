@@ -13,8 +13,10 @@ class DeleteRoleController {
       });
     }
 
+    const userId = req.userId;
+
     try {
-      const result = await deleteRoleService.execute({ id });
+      const result = await deleteRoleService.execute({ id, userId });
 
       return res.json(result);
     } catch (err: any) {

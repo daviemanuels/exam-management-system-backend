@@ -7,6 +7,7 @@ import { exameRoutes } from "./exame.routes";
 import { servicoRoutes } from "./servico.routes";
 import { roleRoutes } from "./role.routes";
 import { dashboardRoutes } from "./dashboard.routes";
+import { logRoutes } from "./log.routes";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use(exameRoutes);
 router.use(servicoRoutes);
 router.use(roleRoutes);
 router.use(dashboardRoutes);
+router.use(logRoutes);
 
 export { router };

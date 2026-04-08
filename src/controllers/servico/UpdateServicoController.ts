@@ -8,10 +8,13 @@ class UpdateServicoController {
 
     const service = new UpdateServicoService();
 
+    const userId = req.userId;
+
     const servico = await service.execute({
       id: String(id),
       nome,
       status,
+      userId,
     });
 
     return res.json(servico);

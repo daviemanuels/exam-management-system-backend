@@ -8,7 +8,9 @@ class CreateRoleController {
 
       const service = new CreateRoleService();
 
-      const role = await service.execute({ name });
+      const userId = req.userId;
+
+      const role = await service.execute({ name, userId });
 
       return res.status(201).json(role);
     } catch (error: any) {

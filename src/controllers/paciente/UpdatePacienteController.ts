@@ -19,6 +19,8 @@ class UpdatePacienteController {
 
     const service = new UpdatePacienteService();
 
+    const userId = req.userId;
+
     try {
       const paciente = await service.execute({
         id: String(id),
@@ -28,8 +30,9 @@ class UpdatePacienteController {
         telefone,
         dataNascimento,
         nacionalidade,
-        sexo: sexo as Sexo, // 🔥 cast necessário
+        sexo: sexo as Sexo, //  cast necessário
         endereco,
+        userId,
       });
 
       return res.json(paciente);

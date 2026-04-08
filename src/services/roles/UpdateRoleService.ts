@@ -1,14 +1,16 @@
 import prismaClient from "../../prisma";
 import { StatusGeral } from "@prisma/client";
+import { CreateLogService } from "../logs/CreateLogService";
 
 interface UpdateRoleRequest {
   id: string;
   name?: string;
   status?: StatusGeral;
+  userId: string; //
 }
 
 class UpdateRoleService {
-  async execute({ id, name, status }: UpdateRoleRequest) {
+  async execute({ id, name, status, userId }: UpdateRoleRequest) {
     if (!id) {
       throw new Error("ID da role é obrigatório");
     }
@@ -41,6 +43,18 @@ class UpdateRoleService {
         ...(status && { status }),
       },
     });
+
+    // LOG
+    const logService = new CreateLogService();
+
+    try {
+      await logService.execute({
+        userId,
+        message: `Atualizou role ${roleExists.name} → ${role.name} (status: ${role.status})`,
+      });
+    } catch (err) {
+      console.error("Erro ao gerar log:", err);
+    }
 
     return role;
   }

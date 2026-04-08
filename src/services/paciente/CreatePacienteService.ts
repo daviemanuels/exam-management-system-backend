@@ -1,5 +1,6 @@
 import prismaClient from "../../prisma";
 import { Sexo } from "@prisma/client";
+import { CreateLogService } from "../logs/CreateLogService";
 
 interface IRequest {
   nome: string;
@@ -10,6 +11,7 @@ interface IRequest {
   nacionalidade?: string;
   sexo: Sexo;
   endereco?: string;
+  userId: string; //
 }
 
 export class CreatePacienteService {
@@ -22,6 +24,7 @@ export class CreatePacienteService {
     nacionalidade,
     sexo,
     endereco,
+    userId,
   }: IRequest) {
     // 🔹 Verifica CPF
     const pacienteExists = await prismaClient.paciente.findUnique({
@@ -51,6 +54,18 @@ export class CreatePacienteService {
         endereco,
       },
     });
+
+    //  LOG
+    const logService = new CreateLogService();
+
+    try {
+      await logService.execute({
+        userId,
+        message: `Cadastrou paciente ${paciente.nome} (CPF: ${paciente.cpf})`,
+      });
+    } catch (err) {
+      console.error("Erro ao gerar log:", err);
+    }
 
     return paciente;
   }

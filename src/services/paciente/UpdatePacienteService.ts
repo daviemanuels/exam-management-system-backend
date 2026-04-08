@@ -1,5 +1,6 @@
 import prismaClient from "../../prisma";
 import { Sexo } from "@prisma/client";
+import { CreateLogService } from "../logs/CreateLogService";
 
 interface UpdatePacienteRequest {
   id: string;
@@ -11,6 +12,7 @@ interface UpdatePacienteRequest {
   nacionalidade?: string;
   sexo?: Sexo;
   endereco?: string;
+  userId: string; //
 }
 
 class UpdatePacienteService {
@@ -24,6 +26,7 @@ class UpdatePacienteService {
     nacionalidade,
     sexo,
     endereco,
+    userId,
   }: UpdatePacienteRequest) {
     if (!id) {
       throw new Error("ID do paciente é obrigatório");
@@ -60,10 +63,22 @@ class UpdatePacienteService {
         ...(telefone && { telefone }),
         ...(dataNascimento && { dataNascimento }),
         ...(nacionalidade && { nacionalidade }),
-        ...(sexo && { sexo }), // 🔥 enum correto
+        ...(sexo && { sexo }),
         ...(endereco && { endereco }),
       },
     });
+
+    //  LOG
+    const logService = new CreateLogService();
+
+    try {
+      await logService.execute({
+        userId,
+        message: `Atualizou paciente ${updated.nome} (CPF: ${updated.cpf})`,
+      });
+    } catch (err) {
+      console.error("Erro ao gerar log:", err);
+    }
 
     return updated;
   }

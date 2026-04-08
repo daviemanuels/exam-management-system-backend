@@ -6,6 +6,9 @@ export class AuthService {
   async execute({ login, senha }: any) {
     const user = await prismaClient.user.findUnique({
       where: { login },
+      include: {
+        role: true,
+      },
     });
 
     if (!user) {
@@ -19,8 +22,11 @@ export class AuthService {
     }
 
     const token = jwt.sign(
-      { id: user.id },
-      "secret", // depois colocamos no .env
+      {
+        id: user.id,
+        role: user.role?.name ?? "User",
+      },
+      process.env.JWT_SECRET as string,
       {
         expiresIn: "1d",
       },
@@ -31,6 +37,7 @@ export class AuthService {
         id: user.id,
         nome: user.nome,
         login: user.login,
+        role_name: user.role?.name,
       },
       token,
     };
