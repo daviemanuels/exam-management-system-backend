@@ -18,7 +18,17 @@ A API também conta com documentação interativa utilizando **Swagger (OpenAPI)
 
 ---
 
-## 📚 Documentação da API (Swagger)
+## 🌐 Base URL
+
+https://exam-management-system-backend-6gzw.onrender.com
+
+## 📄 API Documentation
+
+Swagger disponível em:
+
+👉 https://exam-management-system-backend-6gzw.onrender.com/docs
+
+## 📚 Documentação da API (Swagger - LOCAL)
 
 A documentação interativa está disponível após iniciar o servidor:
 
