@@ -73,7 +73,7 @@ roleRoutes.get("/roles", auth, isAdmin, getRoleController.handle);
  *       403:
  *         description: Acesso negado (somente admin)
  */
-roleRoutes.post("/roles", auth, isAdmin, createRoleController.handle);
+roleRoutes.post("/roles", auth, createRoleController.handle);
 
 /**
  * @swagger
