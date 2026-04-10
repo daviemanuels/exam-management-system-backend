@@ -48,6 +48,7 @@ A API utiliza autenticação via **JWT (Bearer Token)**.
 
 ## 📦 Estrutura do Projeto
 
+```bash
 src/
 ├── controllers/ # Camada de controle (entrada das requisições)
 ├── services/ # Regras de negócio
@@ -56,6 +57,7 @@ src/
 ├── prisma/ # Configuração do banco de dados
 ├── docs/
 │ └── schemas/ # Schemas Swagger organizados
+```
 
 ---
 
