@@ -3,18 +3,24 @@ import { CreateUserService } from "../../services/user/CreateUserService";
 
 export class CreateUserController {
   async handle(req: Request, res: Response) {
-    const { nome, login, senha, funcao_usuario, roleId } = req.body;
+    try {
+      const { nome, login, senha, funcao_usuario, roleId } = req.body;
 
-    const service = new CreateUserService();
+      const service = new CreateUserService();
 
-    const result = await service.execute({
-      nome,
-      login,
-      senha,
-      funcao_usuario,
-      roleId,
-    });
+      const result = await service.execute({
+        nome,
+        login,
+        senha,
+        funcao_usuario,
+        roleId,
+      });
 
-    return res.json(result);
+      return res.status(201).json(result);
+    } catch (error: any) {
+      return res.status(400).json({
+        message: error.message || "Erro ao criar usuário",
+      });
+    }
   }
 }

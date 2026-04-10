@@ -25,6 +25,7 @@ export class AuthService {
       {
         id: user.id,
         role: user.role?.name ?? "User",
+        nome: user.nome,
       },
       process.env.JWT_SECRET as string,
       {
