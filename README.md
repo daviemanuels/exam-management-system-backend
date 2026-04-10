@@ -20,15 +20,13 @@ A API também conta com documentação interativa utilizando **Swagger (OpenAPI)
 
 ## Architecture
 
+```bash
 Frontend (Vercel) -> https://github.com/daviemanuels/exam-management-system-frontend
 ↓
 Backend (Render)
 ↓
 Database (Neon)
-
-## 🌐 Base URL
-
-https://exam-management-system-backend-6gzw.onrender.com
+```
 
 ## 📄 API Documentation
 
