@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000", // local
-      "https://seu-frontend.vercel.app", // produção
+      "exam-management-system-frontend-phi.vercel.app", // produção
     ],
     credentials: true,
   }),
