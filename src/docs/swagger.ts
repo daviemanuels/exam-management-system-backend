@@ -1,6 +1,8 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import path from "path";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export const swaggerSpec = swaggerJSDoc({
   definition: {
     openapi: "3.0.0",
@@ -33,8 +35,14 @@ export const swaggerSpec = swaggerJSDoc({
       },
     ],
   },
+
   apis: [
-    path.resolve(__dirname, "../routes/*.ts"),
-    path.resolve(__dirname, "../docs/schemas/*.ts"),
+    isProd
+      ? path.join(__dirname, "../routes/*.js")
+      : path.join(__dirname, "../routes/*.ts"),
+
+    isProd
+      ? path.join(__dirname, "../docs/schemas/*.js")
+      : path.join(__dirname, "../docs/schemas/*.ts"),
   ],
 });
