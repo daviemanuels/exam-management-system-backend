@@ -1,5 +1,5 @@
 import "express-async-errors";
-import express from "express";
+import express, { RequestHandler } from "express";
 import cors from "cors";
 import { router } from "./routes";
 import { swaggerSpec } from "./docs/swagger";
@@ -11,7 +11,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000", // local
-      "exam-management-system-frontend-phi.vercel.app", // produção
+      "https://exam-management-system-frontend-phi.vercel.app", // produção
     ],
     credentials: true,
   }),
@@ -20,7 +20,11 @@ app.use(express.json());
 
 app.use(router);
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+  "/docs",
+  ...(swaggerUi.serve as any),
+  swaggerUi.setup(swaggerSpec) as any,
+);
 
 // Middleware de erro global
 app.use((err: any, req: any, res: any, next: any) => {
