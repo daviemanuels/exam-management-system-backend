@@ -173,7 +173,7 @@ userRoutes.get("/users", auth, isAdmin, getUsersController.handle);
  *       404:
  *         description: Usuário não encontrado
  */
-userRoutes.put("/users/:id", auth, isAdmin, updateUserController.handle);
+userRoutes.put("/users/:id", auth, updateUserController.handle);
 
 /**
  * @swagger
